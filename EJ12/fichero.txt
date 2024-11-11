@@ -1,0 +1,68 @@
+<?php
+    if(isset($_REQUEST['Enviar'])){
+        print '<h1>Resultado</h1>';
+        $patronNom="/^[a-zA-ZáÁéÉíÍóÓúÚñÑ]*$/";
+        $patronApe="/^[a-zA-ZáÁéÉíÍóÓúÚñÑ]+\s[a-zA-ZáÁéÉíÍóÓúÚñÑ]+$/";
+        $patronEdad="/^[0-9]{1,2}+$/";
+        $patronTelefono="/^[69][0-9]{8}+$/";
+        $patronFichero="/[(.png|.jpg)]+$/";
+        
+        if($_REQUEST['nombre']!='' && preg_match($patronNom,$_REQUEST['nombre'])){
+            $nombre=$_REQUEST['nombre'];
+            print '<p>Su nombre es: '.$nombre.'</p>';
+        }else{
+            print'<p>El nombre introducido no es válido</p>';
+        }
+        if($_REQUEST['apellidos']!='' && preg_match($patronApe,$_REQUEST['apellidos'])){
+            $apellidos=$_REQUEST['apellidos'];
+            print '<p>Sus apellidos son: '.$apellidos.'</p>';
+        }else{
+            print'<p>Los apellidos introducidos no es válido</p>';
+        }
+        if($_REQUEST['edad']!='' && preg_match($patronEdad,$_REQUEST['edad'])){
+            $edad=$_REQUEST['edad'];
+            print '<p>Su edad es: '.$edad.'</p>';
+        }else{
+            print '<p>Su edad no ha sido introducida de forma correcta</p>';
+        }
+        if($_REQUEST['telefono']!='' && preg_match($patronTelefono,$_REQUEST['telefono'])){
+            $telefono=$_REQUEST['telefono'];
+            print '<p>Su número de teléfono es: '.$telefono.'</p>';
+        }else{
+            print '<p>Su telefono no ha sido introducida de forma correcta</p>';
+        }
+        //A partir de aquí voy a usar apuntes para la subida de ficheros
+        $array=pathinfo($_FILES['fichero']['name']);
+        if(isset($_FILES['fichero'])){
+            if($array['extension']=='png'||$array['extension']=='jpg'){
+                print 'El fichero se ha enviado correctamente';
+            }else{
+                print 'La extension del fichero no es válido';
+            }            
+        }else{
+            print 'El fichero no se ha enviado';
+        }
+    }else{
+        
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="EJGlobal.php" method="post" enctype="multipart/form-data">
+        <p>Nombre: <input type="text" name="nombre"></p>
+        <p>Apellidos: <input type="text" name="apellidos"></p>
+        <p>Edad: <input type="text" name="edad"></p>
+        <p>Telefono: <input type="text" name="telefono"></p>
+        <input type="file" name="fichero">
+        <input type="submit" name="Enviar" value="Enviar">
+    </form>
+</body>
+</html>
+<?php
+;}
+?>

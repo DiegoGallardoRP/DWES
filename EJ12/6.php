@@ -1,0 +1,20 @@
+<?php
+$directorioFotos=opendir("imagenes");
+$imagenes=fopen("imagenes.txt","a+");
+if(!is_dir("imagenes2")){
+    mkdir("imagenes2");
+}
+$directorio2=opendir("imagenes2");
+while($archivo=readdir($directorioFotos)){
+    if(!is_dir($archivo)){
+        $destino="imagenes/$archivo";
+        $tamano=filesize($destino);
+        $contenido="Nombre: $archivo Tamaño: $tamano \r\n";
+        fwrite($imagenes,$contenido);
+        copy("imagenes/$archivo","imagenes2"/$archivo);
+    }
+}
+closedir($directorio2);
+fclose($imagenes);
+closedir($directorioFotos);
+?>
