@@ -11,16 +11,37 @@ if (isset($_REQUEST['enviar'])) {
 
         $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
+        $id=$_REQUEST['id'];
         $nombre = $_REQUEST['nombre'];
         $apellidos = $_REQUEST['apellidos'];
-        //Usar UPDATE
-        $resultado = $conexion->prepare('UPDATE personas SET nombre=:nombre,apellidos=:apellidos,direccion=:direccion,telefono=:telefono WHERE id=:id');
+        $direccion = $_REQUEST['direccion'];
+        $telefono = $_REQUEST['telefono'];
+
+        if($nombre!=""){
+            $resultado=$conexion->prepare('UPDATE personas SET nombre=:nombre WHERE id=:id');
+            $resultado->execute([":nombre"=>$nombre,":id"=>$id]);
+        }
+        if($apellidos!=""){
+            $resultado=$conexion->prepare('UPDATE personas SET apellidos=:apellidos WHERE id=:id');
+            $resultado->execute([":apellidos"=>$apellidos,":id"=>$id]);
+        }
+        if($direccion!=""){
+            $resultado=$conexion->prepare('UPDATE personas SET direccion=:direccion WHERE id=:id');
+            $resultado->execute([":direccion"=>$direccion,":id"=>$id]);
+        }
+        if($telefono!=""){
+            $resultado=$conexion->prepare('UPDATE personas SET telefono=:telefono WHERE id=:id');
+            $resultado->execute([":telefono"=>$telefono,":id"=>$id]);
+        }
+        
+        if($resultado->rowCount()!=0){
+            print 'Se ha modificado el usuario con id'.$id.'';
+        }else{
+            print 'Valores vacíos';
+        }
+
     } catch (Exception $e) {
         print '<p>Error no se puede conectar con la BBDD por \n' . $e->getMessage() . '</p>';
     }
-}
-if (isset($_REQUEST['error'])) {
-
 }
 ?>

@@ -19,7 +19,7 @@ try {
     if ($resultado->rowCount() == 0) {
         print '<p>No hay registros existentes</p>';
     } else {
-        print '<form action="modificarRegistros2.php" method=>
+        print '<form action="modificarRegistros2.php" method="post">
             <table style="border: 2px solid black"><thead>
             <tr>
             <th style="border: 2px solid black">Editar</th>
