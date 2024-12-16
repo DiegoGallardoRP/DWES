@@ -3,7 +3,6 @@
     if(!isset($_SESSION['loggeado'])){
         header('location: login.php');
     }
-
     if(isset($_REQUEST['si'])){
         header('location: eliminarTodo2.php');
     }
